@@ -6,23 +6,21 @@ public abstract class Lutador {
 
     Lutador(String nome, int vida, int energia, int forca){
         this.nome = nome;
-        this.vida = 100;
-        this.energia = 100;
-        this.forca = 30;
+        this.vida = vida;
+        this.energia = energia;
+        this.forca = forca;
     }
     // métodos
     abstract public void atacar(Lutador oponente);
 
     abstract public void especial (Lutador oponente);
 
+    abstract public void defender(Lutador oponente);
 
-    public void defender(Lutador oponente){
-        this.energia += 25;
-            System.out.println("Lutador defendeu e recuperou " + this.energia + "de energia");
 
-    }
 
     public void mostrarStatus(){
+        System.out.println("===============================");
         System.out.println("Nome: " + this.nome);
         System.out.println("Vida: " + this.vida);
         System.out.println("Energia: " + this.energia);

@@ -1,18 +1,15 @@
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
+public class Menu{
+    public static void main(String[] args) {
 
-        LutadorLeve[] lutadorLeve1 = new LutadorLeve[10];
-        LutadorMedio[] lutadorMedio1 = new LutadorMedio[10];
-        LutadorPesado[] lutadorPesado1 = new LutadorPesado[10];
-
+    Scanner sc = new Scanner(System.in);
         boolean repetir = true;
+
 
         System.out.println("=================== MORTAL KOMBATE ===================");
 
-        while (repetir){
+        while (repetir) {
             System.out.println("Escolha um Lutador?\n1 - Lutador Leve\n2 - Lutador Médio\n3 - Lutador Pesado\n4 - Encerrar");
             int escol = sc.nextInt();
 
@@ -38,6 +35,8 @@ public class Main {
                     repetir = false;
             }
         }
+
+
 
     }
 }
