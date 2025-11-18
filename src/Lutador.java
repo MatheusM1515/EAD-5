@@ -10,6 +10,12 @@ public abstract class Lutador {
         this.energia = energia;
         this.forca = forca;
     }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+
     // métodos
     abstract public void atacar(Lutador oponente);
 
