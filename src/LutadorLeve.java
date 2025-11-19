@@ -1,27 +1,32 @@
 public class LutadorLeve extends Lutador {
+
     public LutadorLeve(String nome) {
-        super(nome, 80, 100, 10);
+        super(nome, 80, 100, 10); // vida, energia, força
     }
 
     @Override
     public void atacar(Lutador oponente) {
-        oponente.vida -= 15;
-        System.out.println("Lutador " + this.nome + "atacou o Oponente " + oponente.nome + "rapidamente e " + oponente.nome + "ficou com " + oponente.vida + "de vida!");
+        int dano = this.forca;
+        oponente.vida -= dano;
+        System.out.println(nome + " atacou e causou " + dano + " de dano!");
     }
 
     @Override
     public void especial(Lutador oponente) {
-        if (this.energia >= 30) {
-            System.out.println("Lutador " + this.nome + "atacou o Oponente" + oponente.nome + "com o golpe especial, e " + oponente.nome + "ficou com " + oponente.vida);
+        if (energia >= 20) {
+            int dano = this.forca + 10;
+            oponente.vida -= dano;
+            energia -= 20;
+            System.out.println(nome + " usou ESPECIAL e causou " + dano + "!");
         } else {
-            System.out.println("Não tem energia o suficiente!");
+            System.out.println(nome + " não tem energia para especial!");
         }
-
     }
+
     @Override
-    public void defender(Lutador oponente){
-        if(this.vida <= 60){
-            System.out.println("O Lutador " + this.nome + "defendeu o golpe do " + oponente.nome + "e sua energia aumentou para " + this.energia + "de energia!" );
-        }
+    public void defender(Lutador oponente) {
+        int dano = Math.max(0, oponente.forca - 5);
+        vida -= dano;
+        System.out.println(nome + " defendeu e recebeu " + dano + " de dano reduzido!");
     }
 }
