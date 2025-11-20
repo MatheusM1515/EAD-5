@@ -17,7 +17,7 @@ public class LutadorLeve extends Lutador {
             int dano = this.forca + 10;
             oponente.vida -= dano;
             energia -= 20;
-            System.out.println(nome + " usou ESPECIAL e causou " + dano + "!");
+            System.out.println(nome + " usou ESPECIAL e causou " + dano + " de dano!");
         } else {
             System.out.println(nome + " não tem energia para especial!");
         }

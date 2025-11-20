@@ -1,84 +1,131 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    public static int lerInt(Scanner sc) {
+        while (true) {
+            try {
+                int valor = sc.nextInt();
+                sc.nextLine();
+                return valor;
+            } catch (InputMismatchException e) {
+                System.out.println("Número invalido! digite apenas números.");
+                sc.nextLine();
+            }
+        }
+    }
+
+    public static String lerNome(Scanner sc) {
+        while (true) {
+            String nome = sc.nextLine().trim();
+
+            // + no final é FUNDAMENTAL para permitir várias letras
+            if (nome.matches("[A-Za-zÀ-ÿ ]+")) {
+                return nome;
+            }
+
+            System.out.println("Número invalido! Digite apenas letras:");
+        }
+    }
+
+
+
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        Lutador[] lutadores = new Lutador[2];
+        Lutador jogador;
+        Lutador cpu;
 
-        for (int i = 0; i < 2; i++) {
-            System.out.println("Digite o nome de um jogador: ");
-            String nome = sc.next();
+        System.out.println("Digite o nome do 1° jogador:");
+        String nome = lerNome(sc);
 
-            System.out.println("=============================");
-            System.out.println("Escolha um tipo de Lutador: ");
-            System.out.println("Digite 1 para Lutador Leve");
-            System.out.println("Digite 2 para Lutador Médio");
-            System.out.println("Digite 3 para Lutador Pesado");
+        System.out.println("Digite o nome do 2° jogador: ");
+        String nomeCpu = lerNome(sc);
 
-            int tipo = sc.nextInt();
+        System.out.println("==============================");
+        System.out.println("Escolha o tipo de Lutador:");
+        System.out.println("1 - Lutador Leve");
+        System.out.println("2 - Lutador Médio");
+        System.out.println("3 - Lutador Pesado");
 
-            Lutador lutador;
+        int tipo = lerInt(sc);
 
-            switch (tipo) {
-                case 1:
-                    lutador = new LutadorLeve(nome);
-                    break;
-
-                case 2:
-                    lutador = new LutadorMedio(nome);
-                    break;
-
-                case 3:
-                    lutador = new LutadorPesado(nome);
-                    break;
-
-                default:
-                    System.out.println("Tipo inválido! Criando lutador leve por padrão.");
-                    lutador = new LutadorLeve(nome);
-                    break;
+        switch (tipo) {
+            case 1 -> jogador = new LutadorLeve(nome);
+            case 2 -> jogador = new LutadorMedio(nome);
+            case 3 -> jogador = new LutadorPesado(nome);
+            default -> {
+                System.out.println("Tipo inválido! Criando Lutador Leve.");
+                jogador = new LutadorLeve(nome);
             }
-            lutadores[i] = lutador;
-
         }
-        System.out.println("======== INICIANDO O COMBATE ========");
-        Lutador p1 = lutadores[0];
-        Lutador p2 = lutadores[1];
 
-        while (p1.estaVivo() && p2.estaVivo()) {
-            System.out.println("\nJogador 1: \nNome: " + p1.getNome() + "\nVida: " + p1.getVida() + "\nEnergia: " + p1.getEnergia() + "\nForça: " + p1.getForca());
-            System.out.println();
-            System.out.println("===============================");
-            System.out.println("Escolha uma ação: ");
+
+        int cpuTipo = (int)(Math.random() * 3) + 1;
+
+        switch (cpuTipo) {
+            case 1 -> cpu = new LutadorLeve(nomeCpu);
+            case 2 -> cpu = new LutadorMedio(nomeCpu);
+            case 3 -> cpu = new LutadorPesado(nomeCpu);
+            default -> cpu = new LutadorLeve(nomeCpu);
+        }
+
+        System.out.println("\n======== INICIANDO O COMBATE ========");
+
+
+        while (jogador.estaVivo() && cpu.estaVivo()) {
+
+
+            System.out.println("\n========== STATUS ATUAL ==========");
+            System.out.println("Jogador 1: ");
+            jogador.mostrarStatus();
+            System.out.println("---------------------------------");
+            System.out.println("Jogador 2: ");
+            cpu.mostrarStatus();
+            System.out.println("=================================\n");
+
+
+            System.out.println("Escolha sua ação:");
             System.out.println("1 - Atacar");
-            System.out.println("2 - Usar especial");
+            System.out.println("2 - Especial");
             System.out.println("3 - Defender");
+            int acao = lerInt(sc);
 
-            int acao1 = sc.nextInt();
-
-            switch (acao1) {
-                case 1 -> p1.atacar(p2);
-                case 2 -> p1.especial(p2);
-                case 3 -> p1.defender(p2);
-                default -> System.out.println("Opção invalida!");
-
-            }
-
-            if (!p2.estaVivo()) break;
-
-            int acao2 = (int)(Math.random() * 3) + 1;
-            System.out.println(p2.getNome() + " escolheu: " + acao2);
-
-            switch (acao2){
-                case 1 -> p2.atacar(p1);
-                case 2 -> p2.especial(p1);
-                case 3 -> p2.defender(p1);
+            switch (acao) {
+                case 1 -> jogador.atacar(cpu);
+                case 2 -> jogador.especial(cpu);
+                case 3 -> jogador.defender(cpu);
+                default -> System.out.println("Ação inválida!");
             }
 
 
+            if (!cpu.estaVivo()) break;
+
+
+            int acaoCPU = (int)(Math.random() * 3) + 1;
+
+            System.out.println("\n" + nomeCpu + " escolheu: " + acaoCPU);
+
+            switch (acaoCPU) {
+                case 1 -> cpu.atacar(jogador);
+                case 2 -> cpu.especial(jogador);
+                case 3 -> cpu.defender(jogador);
+            }
+
+
+            if (!jogador.estaVivo()) break;
         }
+
+        System.out.println("\n==== FIM DO COMBATE ====");
+
+        if (jogador.estaVivo()) {
+            System.out.println(jogador.getNome() + " venceu!");
+        } else {
+            System.out.println( cpu.getNome() + " venceu!");
+        }
+
+        sc.close();
     }
 }

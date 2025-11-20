@@ -1,11 +1,11 @@
 abstract public class Lutador {
-    // Criando a classe jogador
+
     String nome;
     int vida;
     int energia;
     int forca;
 
-// Construção da Classe
+
 
     public Lutador(String nome, int vida, int energia, int forca) {
         this.nome = nome;
@@ -14,7 +14,7 @@ abstract public class Lutador {
         this.forca = forca;
     }
 
-// Getters e setters
+
 
     public String getNome() {
         return nome;
@@ -53,14 +53,9 @@ abstract public class Lutador {
     }
 
     public boolean estaVivo() {
-        if (this.vida > 0) {
-            System.out.println("Está Vivo");
-            return true;
-        } else {
-            System.out.println("Está morto");
-            return false;
+        return this.vida > 0;
+    }
         }
 
-    }
 
-}
+
